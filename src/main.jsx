@@ -2,14 +2,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import {
   ArrowUpRight,
-  Box,
   Brush,
   Cuboid,
   Layers3,
   Mail,
   MousePointer2,
   Palette,
-  PenTool,
   Sparkles,
 } from "lucide-react";
 import * as THREE from "three";
@@ -17,48 +15,78 @@ import "./styles.css";
 
 const projects = [
   {
-    title: "Drawing Archive",
+    title: "Pitt HS Web System",
     year: "2025",
-    discipline: "Drawing",
+    discipline: "UI/UX + Design System",
+    role: "Multi-design Intern",
     description:
-      "Character studies, gestural line work, and atmosphere sketches built around texture, silhouette, and mood.",
-    tags: ["pencil", "ink", "visual systems"],
+      "Contributed to the redesign of the Pitt Health Sciences web design system, creating updated UI components, color systems, typography guidelines, and Figma prototypes for a unified health sciences identity.",
+    tags: ["Figma", "design systems", "web UI"],
+    accent: "#0b61b7",
+    preview: "system",
+  },
+  {
+    title: "The Voyagers",
+    year: "2025",
+    discipline: "Game UI + Visual Art",
+    role: "UI/UX Designer",
+    description:
+      "Created UI screens, icons, interaction markers, and a warm visual language for a 72-hour Games for Social Impact Jam project. The game won 1st Place, Jammers' Choice.",
+    tags: ["game UI", "drawing", "jam winner"],
     accent: "#ff6f61",
+    preview: "drawing",
   },
   {
-    title: "Material Playground",
-    year: "2025",
-    discipline: "3D",
-    description:
-      "Small 3D scenes and object studies exploring soft lighting, shiny surfaces, tactile forms, and interface-ready assets.",
-    tags: ["three.js", "blender", "motion"],
-    accent: "#26a69a",
-  },
-  {
-    title: "Interface Studies",
+    title: "The Bear and the Piano",
     year: "2024",
-    discipline: "UI/UX",
+    discipline: "Game Design",
+    role: "Visual Designer",
     description:
-      "Product screens, interaction flows, and visual systems for tools that need to feel clear, lively, and easy to navigate.",
-    tags: ["prototyping", "systems", "research"],
+      "Designed visual direction, pixel art, and UI for a 2D rhythm game inspired by a children's book, where highlighted piano keys control the bear's movement and actions.",
+    tags: ["pixel art", "Unity", "interaction"],
     accent: "#f5c542",
+    preview: "pixel",
   },
   {
-    title: "Hybrid Experiments",
+    title: "PantherPal",
     year: "2024",
-    discipline: "Art Direction",
+    discipline: "Product Design",
+    role: "Project Lead / Design Lead",
     description:
-      "Web sketches combining illustration, simple 3D, and editorial pacing for portfolio moments and playful storytelling.",
-    tags: ["web", "identity", "interaction"],
+      "Led product vision, interaction design, and UI for a collaborative app concept supporting Pitt students' mental health through accessible student-centered tools.",
+    tags: ["mobile app", "UX strategy", "prototype"],
     accent: "#6c8cff",
+    preview: "app",
+  },
+  {
+    title: "Pittsburgh Journal of Chinese Studies",
+    year: "2022",
+    discipline: "Website UI",
+    role: "UI Designer",
+    description:
+      "Reimagined an academic journal website with clearer navigation, hierarchy, and a professional scholarly visual identity for easier article discovery.",
+    tags: ["website", "information design", "UI"],
+    accent: "#26a69a",
+    preview: "journal",
+  },
+  {
+    title: "Chinese American Student Association",
+    year: "2022-2025",
+    discipline: "Poster + Creative Media",
+    role: "Design Leadership",
+    description:
+      "Led creative direction, graphics, and multimedia production for cultural campaigns, balancing expressive visuals with event communication goals.",
+    tags: ["poster", "video", "art direction"],
+    accent: "#d93030",
+    preview: "poster",
   },
 ];
 
 const abilities = [
-  { icon: Brush, label: "Drawing", text: "expressive marks, character, texture" },
-  { icon: Cuboid, label: "3D", text: "objects, spatial scenes, lighting" },
-  { icon: MousePointer2, label: "UI/UX", text: "flows, prototypes, polished screens" },
-  { icon: Layers3, label: "Systems", text: "visual language across media" },
+  { icon: MousePointer2, label: "UI/UX", text: "research translation, flows, prototypes, app and web screens" },
+  { icon: Brush, label: "Drawing", text: "storytelling sketches, character moments, poster and game visuals" },
+  { icon: Cuboid, label: "3D", text: "Maya, Blender, Unreal, spatial scenes, and interactive assets" },
+  { icon: Layers3, label: "Systems", text: "design systems, brand consistency, typography, and color rules" },
 ];
 
 function StudioScene() {
@@ -228,6 +256,7 @@ function ProjectCard({ project, index, active, onSelect }) {
         {project.discipline} / {project.year}
       </span>
       <span className="project-card__title">{project.title}</span>
+      <span className="project-card__role">{project.role}</span>
       <span className="project-card__text">{project.description}</span>
       <span className="tag-row">
         {project.tags.map((tag) => (
@@ -244,10 +273,10 @@ function VisualPanel({ activeProject }) {
   return (
     <div className="visual-panel" style={{ "--accent": activeProject.accent }}>
       <div className="visual-panel__top">
-        <span>{activeProject.discipline}</span>
+        <span>{activeProject.role}</span>
         <ArrowUpRight size={18} />
       </div>
-      <div className="art-board">
+      <div className={`art-board art-board--${activeProject.preview}`}>
         <div className="wire-cube">
           {rings.map((ring) => (
             <i key={ring} style={{ "--i": ring }} />
@@ -263,6 +292,7 @@ function VisualPanel({ activeProject }) {
           <span />
           <span />
         </div>
+        <div className="mock-title">{activeProject.title}</div>
       </div>
       <p>{activeProject.description}</p>
     </div>
@@ -283,44 +313,52 @@ function App() {
         <div>
           <a href="#work">Work</a>
           <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </div>
       </nav>
 
       <section className="hero" id="top">
         <div className="hero__copy">
-          <p className="eyebrow">Drawing / 3D / UIUX</p>
-          <h1>A visual designer building playful worlds, useful interfaces, and tactile digital objects.</h1>
+          <p className="eyebrow">UX/UI Designer / Graphic Designer / Game UI</p>
+          <h1>Ava Cai</h1>
           <p>
-            I combine hand-drawn image making, spatial experiments, and product thinking to make portfolio pieces,
-            interactive scenes, and UI systems that feel personal without losing clarity.
+            I blend art, code, and story to make interactive things that matter. I am a University of Pittsburgh
+            senior in Digital Narrative and Interactive Design, with work across UI/UX, game interfaces, drawing,
+            3D, posters, and design systems.
           </p>
           <div className="hero__actions">
             <a className="button button--primary" href="#work">
               <Palette size={18} />
               View work
             </a>
-            <a className="button" href="mailto:hello@avacaii.com">
+            <a className="button" href="mailto:avacaiii0@gmail.com">
               <Mail size={18} />
               Contact
             </a>
+          </div>
+          <div className="hero__meta" aria-label="Portfolio links">
+            <a href="mailto:avacaiii0@gmail.com">avacaiii0@gmail.com</a>
+            <a href="https://github.com/avacai/ava_website" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
         <StudioScene />
       </section>
 
       <section className="ticker" aria-label="Core creative practices">
-        <span>sketch</span>
-        <span>model</span>
-        <span>prototype</span>
-        <span>animate</span>
-        <span>ship</span>
+        <span>Figma</span>
+        <span>Unity</span>
+        <span>Maya</span>
+        <span>Blender</span>
+        <span>Adobe Suite</span>
+        <span>HTML/CSS</span>
+        <span>Python</span>
       </section>
 
       <section className="section work-section" id="work">
         <div className="section-heading">
           <p className="eyebrow">Selected Work</p>
-          <h2>One portfolio, three strengths.</h2>
+          <h2>Real projects across UIUX, games, visual systems, and drawing.</h2>
         </div>
         <div className="work-grid">
           <div className="project-list">
@@ -341,7 +379,7 @@ function App() {
       <section className="section skills-section" id="skills">
         <div className="section-heading">
           <p className="eyebrow">Practice</p>
-          <h2>Designed for a portfolio that can keep growing.</h2>
+          <h2>Cross-disciplinary design with a strong visual voice.</h2>
         </div>
         <div className="ability-grid">
           {abilities.map(({ icon: Icon, label, text }) => (
@@ -354,14 +392,43 @@ function App() {
         </div>
       </section>
 
+      <section className="section experience-section" id="experience">
+        <div className="section-heading">
+          <p className="eyebrow">Experience</p>
+          <h2>Education, leadership, and production work.</h2>
+        </div>
+        <div className="timeline">
+          <article>
+            <span>2025-Present</span>
+            <h3>Pitt Health Science Strategic Communications</h3>
+            <p>Multi-design intern contributing campaign assets, web design system updates, and brand-consistent digital media for university health divisions.</p>
+          </article>
+          <article>
+            <span>2024-2025</span>
+            <h3>Pittsburgh Game Jams</h3>
+            <p>UI/visual designer and project lead for award-winning interdisciplinary game projects, including The Voyagers and Pub Leak.</p>
+          </article>
+          <article>
+            <span>2018-2025</span>
+            <h3>Fresh Lemon Health</h3>
+            <p>Web and logo designer maintaining WordPress materials, redesigning layouts, and creating visual assets for nonprofit health outreach.</p>
+          </article>
+          <article>
+            <span>2022-2025</span>
+            <h3>University of Pittsburgh</h3>
+            <p>BS in Digital Narrative and Interactive Design, minor in Information Science. Dean's List, 3Sixty Program Scholarship recipient, English and Mandarin.</p>
+          </article>
+        </div>
+      </section>
+
       <section className="contact" id="contact">
         <div>
           <p className="eyebrow">Now</p>
-          <h2>Available for visual design, 3D web scenes, and UI/UX projects.</h2>
+          <h2>Seeking full-time UX/UI design roles and open to interactive design collaborations.</h2>
         </div>
-        <a className="button button--primary" href="mailto:hello@avacaii.com">
+        <a className="button button--primary" href="mailto:avacaiii0@gmail.com">
           <Mail size={18} />
-          hello@avacaii.com
+          avacaiii0@gmail.com
         </a>
       </section>
 
